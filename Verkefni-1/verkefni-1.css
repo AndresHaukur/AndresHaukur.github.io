@@ -1,0 +1,69 @@
+
+body{order: 1px solid blue;
+    width: 800px;
+    margin: auto;
+}
+
+
+
+.spassia{
+    padding-left: 40px;
+    font-style: italic; 
+    color: royalblue;   
+}
+
+.imagine{
+    font-weight: bold;
+    color: tomato;
+}
+
+.rautt{
+    color: rgb(85, 1, 1);
+    
+}
+
+
+.aðalfyrirsögn{
+    color: mediumvioletred;
+    text-align: center;
+    font-variant: small-caps;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+}
+
+.A{
+    font-weight: bold;
+    color: mediumvioletred;
+    font-size: large;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.undirfyrirsögn{
+    color: pink;
+}
+
+.body{
+    color: red;
+}
+
+.ul{
+    color: green;
+}
+
+.prestley{
+    font-weight: bold;
+    color: red;  
+    text-align: center;
+}
+
+.blatt{color: blue;}
+
+.rautt{color:red;}
+
+a:link{ color: chocolate;}
+
+a:visited{ color: purple;}
+
+a:hover{ color: seagreen;}
+
+a:active{color: violet;}
