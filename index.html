@@ -7,42 +7,37 @@
 </head>
 <body>
     <script>
-        // Athuga hvort WebXR sé stuðlað í vafranum
         if ('xr' in navigator) {
-            // Fá aðgang að XR tæki
             const xr = navigator.xr;
 
-            // Athuga hvort XR tæki séu tiltækin
             xr.isSessionSupported('immersive-ar').then((supported) => {
                 if (supported) {
-                    // Sýna "Start" hnapp
                     const startButton = document.createElement('button');
                     startButton.innerText = 'Start AR';
                     document.body.appendChild(startButton);
 
-                    // Hlutur sem á að birta í AR umhverfinu
-                    const modelUri = 'https://github.com/AndresHaukur/AndresHaukur.github.io/blob/main/free_1975_porsche_911_930_turbo/scene.gltf';  // Hér þarf að breyta slottet.gltf með slóðinni á GLTF skrána þína
+                    const modelUri = 'slottet.gltf';
 
-                    // Þegar hnappurinn er ýttur
                     startButton.addEventListener('click', () => {
-                        // Opna AR session
                         xr.requestSession('immersive-ar', {
                             requiredFeatures: ['hit-test']
                         }).then((session) => {
-                            // Búa til XR reference space
                             session.requestReferenceSpace('viewer').then((referenceSpace) => {
-                                // Sækja GLTF hlut
-                                const loader = new THREE.GLTFLoader();
-                                loader.load(modelUri, (gltf) => {
-                                    const model = gltf.scene;
+                                // Búa til XR hlut
+                                const xrModel = new THREE.XRMeshModel(modelUri, session, referenceSpace);
 
-                                    // Búa til XR hlut
-                                    const xrModel = new THREE.XRMeshModel(model, session, referenceSpace);
+                                // Birta XR hlut í AR umhverfinu
+                                session.requestAnimationFrame((time, frame) => {
+                                    const hitTestResults = frame.getHitTestResults();
+                                    if (hitTestResults.length > 0) {
+                                        const pose = hitTestResults[0].getPose(referenceSpace);
 
-                                    // Birta XR hlut í AR umhverfinu
-                                    session.requestAnimationFrame((time, frame) => {
-                                        xrModel.onUpdate(frame);
-                                    });
+                                        // Setja XR hlut á réttan stað
+                                        xrModel.position.copy(pose.transform.position);
+                                        xrModel.rotation.fromArray(pose.transform.orientation);
+                                    }
+
+                                    xrModel.onUpdate(frame);
                                 });
                             });
                         });
